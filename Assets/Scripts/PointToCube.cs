@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class PointToCube : MonoBehaviour
 {
-    private Stack<Command> Commands = new Stack<Command>();
+    private Stack<Stack<Command>> Commands = new Stack<Stack<Command>>();
+    private Stack<Command> RunningCommands = new Stack<Command>();
 
-    private Stack<Command> RedoCommands = new Stack<Command>();
+    private Stack<Stack<Command>> RedoCommands = new Stack<Stack<Command>>();
 
     private Color _colorSelected = Color.gray;
     public Slider redSlider;
@@ -30,12 +31,18 @@ public class PointToCube : MonoBehaviour
                     Command command = new Coloring(_colorSelected,
                         hit.transform.GetComponent<MeshRenderer>().material.color, hit.transform);
                     command.Do();
-                    Commands.Push(command);
+                    RunningCommands.Push(command);
                     if (RedoCommands.Count > 0) RedoCommands.Clear();
                     _lastCubeColored = hit.transform;
                 }
             }
         }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            Commands.Push(RunningCommands);
+            RunningCommands = new Stack<Command>();
+        }
+        
         if (Input.GetButton("Fire2"))
         {
             RaycastHit hit;
@@ -45,27 +52,39 @@ public class PointToCube : MonoBehaviour
                 {
                     Command command = new Erasing(hit.transform, hit.transform.GetComponent<MeshRenderer>().material.color);
                     command.Do();
-                    Commands.Push(command);
+                    RunningCommands.Push(command);
                     if (RedoCommands.Count > 0) RedoCommands.Clear();
                 }
             }
+        }
+
+        if (Input.GetButtonUp("Fire2"))
+        {
+            Commands.Push(RunningCommands);
+            RunningCommands = new Stack<Command>();
         }
 
         if (Input.GetButtonDown("Jump"))
         {
             Debug.Log(Commands.Count);
             if (Commands.Count == 0) return;
-            Command command = Commands.Pop();
-            command.Undo();
-            RedoCommands.Push(command);
+            Stack<Command> commands = Commands.Pop();
+            foreach (Command command in commands)
+            {
+                command.Undo();
+            }
+            RedoCommands.Push(commands);
         }
 
         if (Input.GetButtonDown("Submit"))
         {
             if (RedoCommands.Count == 0) return;
-            Command command = RedoCommands.Pop();
-            command.Do();
-            Commands.Push(command);
+            Stack<Command> commands = RedoCommands.Pop();
+            foreach (Command command in commands)
+            {
+                command.Do();
+            }
+            Commands.Push(commands);
         }
     }
 
