@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PointToCube : MonoBehaviour
 {
@@ -8,7 +9,11 @@ public class PointToCube : MonoBehaviour
 
     private Stack<Command> RedoCommands = new Stack<Command>();
 
-    private Color _colorSelected = Color.blue;
+    private Color _colorSelected = Color.white;
+    public Slider redSlider;
+    public Slider greenSlider;
+    public Slider blueSlider;
+    public Image previewColor;
 
     // Update is called once per frame
     void Update()
@@ -49,8 +54,9 @@ public class PointToCube : MonoBehaviour
         }
     }
 
-    public void GetNewColor(Material color)
+    public void GetNewColor()
     {
-        _colorSelected = color.color;
+        _colorSelected = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+        previewColor.color = _colorSelected;
     }
 }
