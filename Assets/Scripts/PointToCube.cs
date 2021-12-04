@@ -39,7 +39,7 @@ public class PointToCube : MonoBehaviour
         }
         if (Input.GetButtonUp("Fire1"))
         {
-            Commands.Push(RunningCommands);
+            if (RunningCommands.Count > 0) Commands.Push(RunningCommands);
             RunningCommands = new Stack<Command>();
         }
         
@@ -60,7 +60,7 @@ public class PointToCube : MonoBehaviour
 
         if (Input.GetButtonUp("Fire2"))
         {
-            Commands.Push(RunningCommands);
+            if (RunningCommands.Count > 0) Commands.Push(RunningCommands);
             RunningCommands = new Stack<Command>();
         }
 
