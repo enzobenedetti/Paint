@@ -29,5 +29,11 @@ public class ZoomCanvas : MonoBehaviour
                     0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z) * 0.2f;
             }
         }
+        
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Camera.transform.position = Vector3.up * 13;
+            Camera.orthographicSize = Mathf.Max(ChangeSize.Height, ChangeSize.Width) / 2;
+        }
     }
 }
