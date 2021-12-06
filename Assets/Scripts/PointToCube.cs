@@ -21,7 +21,7 @@ public class PointToCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Paint"))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -37,13 +37,13 @@ public class PointToCube : MonoBehaviour
                 }
             }
         }
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("Paint"))
         {
             if (RunningCommands.Count > 0) Commands.Push(RunningCommands);
             RunningCommands = new Stack<Command>();
         }
         
-        if (Input.GetButton("Fire2"))
+        if (Input.GetButton("Erase"))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
@@ -58,7 +58,7 @@ public class PointToCube : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonUp("Fire2"))
+        if (Input.GetButtonUp("Erase"))
         {
             if (RunningCommands.Count > 0) Commands.Push(RunningCommands);
             RunningCommands = new Stack<Command>();

@@ -18,7 +18,16 @@ public class ZoomCanvas : MonoBehaviour
         if (scroll != 0f)
         {
             Camera.orthographicSize -= scroll;
-            
+            if (scroll > 0)
+            {
+                Camera.transform.position += new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 
+                    0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z) * 0.1f;
+            }
+            else
+            {
+                Camera.transform.position -= new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 
+                    0, Camera.main.ScreenToWorldPoint(Input.mousePosition).z) * 0.2f;
+            }
         }
     }
 }
