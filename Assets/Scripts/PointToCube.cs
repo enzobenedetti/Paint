@@ -64,7 +64,7 @@ public class PointToCube : MonoBehaviour
             RunningCommands = new Stack<Command>();
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Undo"))
         {
             Debug.Log(Commands.Count);
             if (Commands.Count == 0) return;
@@ -76,7 +76,7 @@ public class PointToCube : MonoBehaviour
             RedoCommands.Push(commands);
         }
 
-        if (Input.GetButtonDown("Submit"))
+        if (Input.GetButtonDown("Redo"))
         {
             if (RedoCommands.Count == 0) return;
             Stack<Command> commands = RedoCommands.Pop();
